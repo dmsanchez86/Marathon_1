@@ -54,6 +54,7 @@ public class Home extends javax.swing.JFrame implements Runnable{
 
         lbl_time.setFont(new java.awt.Font("Dialog", 2, 14)); // NOI18N
         lbl_time.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_time.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_time.setText("0d days 0h hours 0m minutes 0s seconds until to race starts!");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -61,16 +62,16 @@ public class Home extends javax.swing.JFrame implements Runnable{
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(102, 102, 102)
-                .addComponent(lbl_time)
+                .addGap(65, 65, 65)
+                .addComponent(lbl_time, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbl_time)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
@@ -269,7 +270,7 @@ public class Home extends javax.swing.JFrame implements Runnable{
     @Override
     public void run() {
         Calendar future_time = Calendar.getInstance();
-        future_time.set(2015, Calendar.NOVEMBER, 23, 6, 0, 0);
+        future_time.set(2015, Calendar.NOVEMBER, 23, 11, 0, 0);
         long future_time_in_miliseconds = future_time.getTimeInMillis();
         
         String txt_time = lbl_time.getText();
@@ -290,12 +291,18 @@ public class Home extends javax.swing.JFrame implements Runnable{
             
             String text = "";
             
-            if(seconds < 10)
-                text = txt_time.replace("0d", "0"+days).replace("0h", "0"+hours).replace("0m", "0"+minutes).replace("0s", "0"+seconds);
-            else
-                text = txt_time.replace("0d", ""+days).replace("0h", ""+hours).replace("0m", ""+minutes).replace("0s", ""+seconds);  
-       
-            lbl_time.setText(text);
+            if(days <= 0 && hours <= 0 && minutes <= 0){
+                lbl_time.setText("The race start now!");
+                lbl_time.setForeground(Color.green);
+                lbl_time.setFont(new Font("Helvetica", Font.BOLD, 12));
+            }else{
+                if(seconds < 10)
+                    text = txt_time.replace("0d", ""+days).replace("0h", ""+hours).replace("0m", ""+minutes).replace("0s", "0"+seconds);
+                else
+                    text = txt_time.replace("0d", ""+days).replace("0h", ""+hours).replace("0m", ""+minutes).replace("0s", ""+seconds);  
+
+                lbl_time.setText(text);
+            }
             
             try {
                 Thread.sleep(1000);
