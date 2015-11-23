@@ -5,6 +5,7 @@
  */
 package Views;
 
+import java.util.Calendar;
 import javax.swing.JOptionPane;
 import marathon.Timer;
 
@@ -153,7 +154,7 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
         jLabel7.setText("Runner");
 
         jcb_runner.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jcb_runner.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select" }));
+        jcb_runner.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select", "Mathie (USA)" }));
 
         jLabel8.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel8.setText("Name Card");
@@ -163,6 +164,8 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
 
         jLabel10.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel10.setText("Expire date");
+
+        txt_expire_year.setValue(2015);
 
         jLabel11.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel11.setText("CVC");
@@ -197,13 +200,12 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
                             .addComponent(txt_name_card)
                             .addComponent(txt_number_card)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addComponent(txt_expire_day, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(17, 17, 17)
-                                        .addComponent(txt_expire_year, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(txt_cvc, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 47, Short.MAX_VALUE)))))
+                                .addComponent(txt_expire_day, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txt_expire_year))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(txt_cvc, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addGap(29, 29, 29))
         );
         jPanel3Layout.setVerticalGroup(
@@ -281,9 +283,20 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
         });
 
         btn_pay_now.setText("Pay Now");
+        btn_pay_now.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_pay_nowActionPerformed(evt);
+            }
+        });
 
         btn_reset.setText("Cancel");
+        btn_reset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_resetActionPerformed(evt);
+            }
+        });
 
+        txt_amount.setToolTipText("Presione \"Enter\" para ingresar la cantidad");
         txt_amount.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_amountKeyPressed(evt);
@@ -429,15 +442,80 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
     private void txt_amountKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_amountKeyPressed
         // TODO add your handling code here:
         if(evt.getKeyCode() == 10){
-            int amount = Integer.parseInt(lbl_number_cash.getText());
-            try {
-                lbl_number_cash.setText(""+(amount + Integer.parseInt(txt_amount.getText())));
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Ingrese Solo Números","Error",JOptionPane.ERROR_MESSAGE);
+            if(Integer.parseInt(txt_amount.getText()) < 0){
+                JOptionPane.showMessageDialog(this, "Write Positive Values","Error",JOptionPane.ERROR_MESSAGE);
                 txt_amount.setText("");
+            }else{
+                int amount = Integer.parseInt(lbl_number_cash.getText());
+                try {
+                    lbl_number_cash.setText(""+(amount + Integer.parseInt(txt_amount.getText())));
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Write Only Numbers","Error",JOptionPane.ERROR_MESSAGE);
+                    txt_amount.setText("");
+                }
             }
         }
     }//GEN-LAST:event_txt_amountKeyPressed
+
+    private void btn_resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_resetActionPerformed
+        // TODO add your handling code here:
+         this.setVisible(false);
+        Home h = new Home();
+        h.setVisible(true);
+    }//GEN-LAST:event_btn_resetActionPerformed
+
+    private void btn_pay_nowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pay_nowActionPerformed
+        // TODO add your handling code here:
+        String name = txt_name.getText();
+        String runner = jcb_runner.getSelectedItem() .toString();
+        String name_card = txt_name_card.getText();
+        long number_card = 0;
+        int expire_day = 0;
+        int expire_year = 0;
+        int cvc = 0;
+        
+        Calendar time = Calendar.getInstance();
+        String[] date = time.getTime().toString().split(" ");
+        int day = Integer.parseInt(date[2]);
+        int year = Integer.parseInt(date[5]);
+        
+        try{
+            number_card = Long.parseLong(txt_number_card.getText());
+            expire_day = Integer.parseInt(txt_expire_day.getValue().toString());
+            expire_year = Integer.parseInt(txt_expire_year.getValue().toString());
+            cvc = Integer.parseInt(txt_cvc.getValue().toString());
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        
+        if("".equals(name)){
+            JOptionPane.showMessageDialog(this, "The Name is empty","Warning",JOptionPane.WARNING_MESSAGE);
+            txt_name.requestFocus();
+        }else if("Select".equals(runner)){
+            JOptionPane.showMessageDialog(this, "Select one Runner","Warning",JOptionPane.WARNING_MESSAGE);
+            jcb_runner.requestFocus();
+        }else if("".equals(name_card)){
+            JOptionPane.showMessageDialog(this, "The Name Card is empty","Warning",JOptionPane.WARNING_MESSAGE);
+            txt_name_card.requestFocus();
+        }else if("".equals(txt_number_card.getText())){
+            JOptionPane.showMessageDialog(this, "The Number Card is empty","Warning",JOptionPane.WARNING_MESSAGE);
+            txt_number_card.requestFocus();
+        }else if(txt_number_card.getText().length() != 16){
+            JOptionPane.showMessageDialog(this, "The Number Card must have 16 numbers","Warning",JOptionPane.WARNING_MESSAGE);
+            txt_number_card.requestFocus();
+        } else if("0".equals(txt_expire_day.getValue().toString()) || expire_day <= day){
+            JOptionPane.showMessageDialog(this, "The day  must be major that this day","Warning",JOptionPane.WARNING_MESSAGE);
+            txt_expire_day.requestFocus();
+        }else if(expire_year <= year){
+            JOptionPane.showMessageDialog(this, "The year must be major that this year","Warning",JOptionPane.WARNING_MESSAGE);
+            txt_expire_year.requestFocus();
+        }else if(Integer.parseInt(txt_cvc.getValue().toString()) <= 2 || "0".equals(txt_cvc.getValue().toString())){
+            JOptionPane.showMessageDialog(this, "The Number Card must have 16 numbers","Warning",JOptionPane.WARNING_MESSAGE);
+            txt_cvc.requestFocus();
+        }else{
+            System.out.println("Complete");
+        }
+    }//GEN-LAST:event_btn_pay_nowActionPerformed
 
     /**
      * @param args the command line arguments

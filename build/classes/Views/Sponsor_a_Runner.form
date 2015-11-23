@@ -238,15 +238,13 @@
                               <Component id="txt_name_card" max="32767" attributes="0"/>
                               <Component id="txt_number_card" max="32767" attributes="0"/>
                               <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="txt_expire_day" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
-                                          <Component id="txt_expire_year" min="-2" pref="54" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Component id="txt_cvc" min="-2" pref="54" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="0" pref="47" max="32767" attributes="0"/>
+                                  <Component id="txt_expire_day" min="-2" pref="47" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="txt_expire_year" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="txt_cvc" min="-2" pref="69" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -332,8 +330,9 @@
               <Font name="Dialog" size="12" style="0"/>
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="1">
+              <StringArray count="2">
                 <StringItem index="0" value="Select"/>
+                <StringItem index="1" value="Mathie (USA)"/>
               </StringArray>
             </Property>
           </Properties>
@@ -370,6 +369,11 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JSpinner" name="txt_expire_year">
+          <Properties>
+            <Property name="value" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="2015" type="code"/>
+            </Property>
+          </Properties>
         </Component>
         <Component class="javax.swing.JSpinner" name="txt_expire_day">
         </Component>
@@ -398,29 +402,34 @@
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="lbl_information_charity" min="-2" pref="19" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="btn_less" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="txt_amount" max="32767" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="btn_more" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                      <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="btn_less" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="1" attributes="0">
                                           <Component id="jLabel16" min="-2" pref="47" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="lbl_number_cash" min="-2" pref="72" max="-2" attributes="0"/>
                                       </Group>
+                                  </Group>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <Component id="txt_amount" min="-2" pref="53" max="-2" attributes="0"/>
+                                          <EmptySpace max="32767" attributes="0"/>
+                                          <Component id="btn_more" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="lbl_number_cash" min="-2" pref="123" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                                  <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="lbl_information_charity" min="-2" pref="19" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -432,7 +441,7 @@
                           <Component id="btn_reset" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="45" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -449,11 +458,11 @@
                   <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                   <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lbl_number_cash" min="-2" pref="73" max="-2" attributes="0"/>
-                      <Component id="jLabel16" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="lbl_number_cash" alignment="3" min="-2" pref="73" max="-2" attributes="0"/>
+                      <Component id="jLabel16" alignment="3" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btn_less" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btn_more" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -538,30 +547,48 @@
               <Color blue="99" green="99" red="99" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="2"/>
-            <Property name="text" type="java.lang.String" value="50"/>
+            <Property name="text" type="java.lang.String" value="0"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btn_less">
           <Properties>
             <Property name="text" type="java.lang.String" value="-"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_lessActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_more">
           <Properties>
             <Property name="text" type="java.lang.String" value="+"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JSpinner" name="txt_amount">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_moreActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_pay_now">
           <Properties>
             <Property name="text" type="java.lang.String" value="Pay Now"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_pay_nowActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_reset">
           <Properties>
             <Property name="text" type="java.lang.String" value="Cancel"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_resetActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="txt_amount">
+          <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="Presione &quot;Enter&quot; para ingresar la cantidad"/>
+          </Properties>
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_amountKeyPressed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
