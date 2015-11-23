@@ -5,6 +5,7 @@
  */
 package Views;
 
+import javax.swing.JOptionPane;
 import marathon.Timer;
 
 /**
@@ -62,9 +63,9 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
         lbl_number_cash = new javax.swing.JLabel();
         btn_less = new javax.swing.JButton();
         btn_more = new javax.swing.JButton();
-        txt_amount = new javax.swing.JSpinner();
         btn_pay_now = new javax.swing.JButton();
         btn_reset = new javax.swing.JButton();
+        txt_amount = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sponsor a Runner");
@@ -263,15 +264,31 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
         lbl_number_cash.setFont(new java.awt.Font("Dialog", 0, 54)); // NOI18N
         lbl_number_cash.setForeground(new java.awt.Color(153, 153, 153));
         lbl_number_cash.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lbl_number_cash.setText("50");
+        lbl_number_cash.setText("0");
 
         btn_less.setText("-");
+        btn_less.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_lessActionPerformed(evt);
+            }
+        });
 
         btn_more.setText("+");
+        btn_more.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_moreActionPerformed(evt);
+            }
+        });
 
         btn_pay_now.setText("Pay Now");
 
         btn_reset.setText("Cancel");
+
+        txt_amount.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_amountKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -284,32 +301,34 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(77, 77, 77)
+                        .addGap(53, 53, 53)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jLabel13)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lbl_information_charity, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                                    .addComponent(btn_less)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(txt_amount)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(btn_more))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel15)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel4Layout.createSequentialGroup()
-                                        .addGap(6, 6, 6)
+                                        .addComponent(btn_less)
+                                        .addGap(26, 26, 26))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                                         .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(lbl_number_cash, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                                        .addComponent(txt_amount, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btn_more))
+                                    .addComponent(lbl_number_cash, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel15)
+                                .addGroup(jPanel4Layout.createSequentialGroup()
+                                    .addComponent(jLabel13)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(lbl_information_charity, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(45, 45, 45)
                         .addComponent(btn_pay_now)
                         .addGap(28, 28, 28)
                         .addComponent(btn_reset)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -323,10 +342,10 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addComponent(jLabel15)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_number_cash, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_less)
                     .addComponent(btn_more)
@@ -390,6 +409,35 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
         Home h = new Home();
         h.setVisible(true);
     }//GEN-LAST:event_btn_backActionPerformed
+
+    private void btn_lessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_lessActionPerformed
+        // TODO add your handling code here:
+        int amount = Integer.parseInt(lbl_number_cash.getText());
+        
+        if(amount == 0 || amount < 10)
+            return;
+        else
+            lbl_number_cash.setText(""+(amount - 10));
+    }//GEN-LAST:event_btn_lessActionPerformed
+
+    private void btn_moreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_moreActionPerformed
+        // TODO add your handling code here:
+        int amount = Integer.parseInt(lbl_number_cash.getText());
+        lbl_number_cash.setText(""+(amount + 10));
+    }//GEN-LAST:event_btn_moreActionPerformed
+
+    private void txt_amountKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_amountKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == 10){
+            int amount = Integer.parseInt(lbl_number_cash.getText());
+            try {
+                lbl_number_cash.setText(""+(amount + Integer.parseInt(txt_amount.getText())));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Ingrese Solo Números","Error",JOptionPane.ERROR_MESSAGE);
+                txt_amount.setText("");
+            }
+        }
+    }//GEN-LAST:event_txt_amountKeyPressed
 
     /**
      * @param args the command line arguments
@@ -455,7 +503,7 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_information_charity;
     private javax.swing.JLabel lbl_number_cash;
     private javax.swing.JLabel lbl_time;
-    private javax.swing.JSpinner txt_amount;
+    private javax.swing.JTextField txt_amount;
     private javax.swing.JSpinner txt_cvc;
     private javax.swing.JSpinner txt_expire_day;
     private javax.swing.JSpinner txt_expire_year;
