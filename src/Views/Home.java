@@ -22,7 +22,7 @@ public class Home extends javax.swing.JFrame{
      * Creates new form Home
      */
     public Home() {
-        initComponents();
+        initComponents();        
         Timer t = new Timer(this,lbl_time);
     }
 
@@ -183,7 +183,9 @@ public class Home extends javax.swing.JFrame{
 
     private void btn_sponsor_runnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sponsor_runnerActionPerformed
         // TODO add your handling code here:
-        
+        this.setVisible(false);
+        Sponsor_a_Runner sponsor_a_runner = new Sponsor_a_Runner();
+        sponsor_a_runner.setVisible(true);
     }//GEN-LAST:event_btn_sponsor_runnerActionPerformed
 
     private void btn_find_out_moreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_find_out_moreActionPerformed
