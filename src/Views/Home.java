@@ -10,6 +10,8 @@ import java.awt.Font;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import marathon.Conection;
 import marathon.Timer;
 
 /**
@@ -24,6 +26,15 @@ public class Home extends javax.swing.JFrame{
     public Home() {
         initComponents();        
         Timer t = new Timer(this,lbl_time);
+        Conection con = new Conection();
+        
+        con.conect();
+        
+        if(con.get_conection() == null){
+            JOptionPane.showMessageDialog(this, "No conection stablised!","Conection",JOptionPane.ERROR_MESSAGE);
+            btn_find_out_more.setEnabled(false);
+            btn_sponsor_runner.setEnabled(false);
+        }  
     }
 
     /**
