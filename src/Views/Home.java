@@ -25,6 +25,7 @@ public class Home extends javax.swing.JFrame{
      */
     public Home() {
         initComponents();        
+        lbl_reload.setVisible(false);
         Timer t = new Timer(this,lbl_time);
         Conection con = new Conection();
         
@@ -34,6 +35,7 @@ public class Home extends javax.swing.JFrame{
             JOptionPane.showMessageDialog(this, "No conection stablised!","Conection",JOptionPane.ERROR_MESSAGE);
             btn_find_out_more.setEnabled(false);
             btn_sponsor_runner.setEnabled(false);
+            lbl_reload.setVisible(true);
         }  
     }
 
@@ -54,6 +56,7 @@ public class Home extends javax.swing.JFrame{
         jLabel3 = new javax.swing.JLabel();
         btn_sponsor_runner = new javax.swing.JButton();
         btn_find_out_more = new javax.swing.JButton();
+        lbl_reload = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Marathon Skills 2015");
@@ -113,7 +116,7 @@ public class Home extends javax.swing.JFrame{
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(12, 12, 12)
                                 .addComponent(jLabel3)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,6 +166,15 @@ public class Home extends javax.swing.JFrame{
             }
         });
 
+        lbl_reload.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/refresh.png"))); // NOI18N
+        lbl_reload.setToolTipText("Reload to connect!");
+        lbl_reload.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lbl_reload.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl_reloadMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -174,17 +186,21 @@ public class Home extends javax.swing.JFrame{
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btn_find_out_more, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_sponsor_runner, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(177, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbl_reload)
+                .addGap(25, 25, 25))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
-                .addComponent(btn_sponsor_runner, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addGap(35, 35, 35)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_sponsor_runner, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_reload))
+                .addGap(22, 22, 22)
                 .addComponent(btn_find_out_more, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addGap(18, 33, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -232,6 +248,21 @@ public class Home extends javax.swing.JFrame{
         btn_find_out_more.setFont(new Font("Dialog", Font.PLAIN, 12));
     }//GEN-LAST:event_btn_find_out_moreMouseExited
 
+    private void lbl_reloadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_reloadMouseClicked
+        // TODO add your handling code here:
+        Conection con = new Conection();
+        con.conect();
+        
+        if(con.get_conection() != null){
+            JOptionPane.showMessageDialog(this, "Conected!","Conection",JOptionPane.INFORMATION_MESSAGE);
+            btn_find_out_more.setEnabled(true);
+            btn_sponsor_runner.setEnabled(true);
+            lbl_reload.setVisible(false);
+        }else{
+            JOptionPane.showMessageDialog(this, "No conection stablised!","Conection",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_lbl_reloadMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -275,6 +306,7 @@ public class Home extends javax.swing.JFrame{
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel lbl_reload;
     private javax.swing.JLabel lbl_time;
     // End of variables declaration//GEN-END:variables
 }
