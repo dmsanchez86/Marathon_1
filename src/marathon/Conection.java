@@ -16,9 +16,9 @@ import java.sql.SQLException;
  * @author mauro
  */
 public class Conection {
-  private Connection conection;
-  private PreparedStatement query;
-  private ResultSet data;
+  protected Connection conection;
+  protected PreparedStatement query;
+  protected ResultSet data;
   
   public boolean conect(){
     try {
