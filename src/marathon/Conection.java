@@ -23,7 +23,7 @@ public class Conection {
   public boolean conect(){
     try {
       Class.forName("com.mysql.jdbc.Driver");
-      conection = DriverManager.getConnection("jdbc:mysql://localhost:3306/maraton", "root", "");
+      conection = DriverManager.getConnection("jdbc:mysql://localhost:3306/marathon", "root", "");
     } catch (ClassNotFoundException | SQLException e) {
       System.out.println(e.getMessage());
       return false;
