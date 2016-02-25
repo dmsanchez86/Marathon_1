@@ -49,7 +49,7 @@ public class Home extends javax.swing.JFrame{
         lbl_reload = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Marathon Skills 2015");
+        setTitle("Marathon Skills 2016");
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 153));
@@ -205,7 +205,9 @@ public class Home extends javax.swing.JFrame{
 
     private void btn_find_out_moreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_find_out_moreActionPerformed
         // TODO add your handling code here:
-        
+        this.setVisible(false);
+        Find_Out_More_Information fo = new Find_Out_More_Information();
+        fo.setVisible(true);
     }//GEN-LAST:event_btn_find_out_moreActionPerformed
 
     private void btn_sponsor_runnerMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_sponsor_runnerMouseEntered
