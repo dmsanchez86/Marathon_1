@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package marathon;
 
 import Views.Home;
@@ -12,21 +6,17 @@ import java.awt.Font;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 /**
- * 
  * @author Mao
  */
 public class Timer implements Runnable{
     Thread hilo;
-    JFrame form;
     JLabel lbl_time;
     
-    public Timer(JFrame form, JLabel lbl){
+    public Timer(JLabel lbl){
         this.lbl_time = lbl;
-        this.form = form;
         hilo = new Thread(this);
         hilo.start();
     }
@@ -34,7 +24,7 @@ public class Timer implements Runnable{
     @Override
     public void run() {
         Calendar future_time = Calendar.getInstance();
-        future_time.set(2015, Calendar.NOVEMBER, 30, 6, 0, 0);
+        future_time.set(2016, Calendar.FEBRUARY, 29, 6, 0, 0);
         long future_time_in_miliseconds = future_time.getTimeInMillis();
         
         String txt_time = lbl_time.getText();
@@ -53,7 +43,7 @@ public class Timer implements Runnable{
             diff_miliseconds = diff_miliseconds - (minutes * (1000 * 60));
             int seconds = (int) diff_miliseconds / (1000);
             
-            String text = "";
+            String text;
             
             if(days <= 0 && hours <= 0 && minutes <= 0){
                 lbl_time.setText("The race start now!");

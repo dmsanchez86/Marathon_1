@@ -1,49 +1,88 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Views;
 
+import java.awt.event.ItemEvent;
 import java.sql.ResultSet;
 import java.util.Calendar;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import marathon.Conection;
+import javax.swing.SpinnerNumberModel;
 import marathon.Queries;
 import marathon.Timer;
 
 /**
- *
  * @author Mao
  */
 public class Sponsor_a_Runner extends javax.swing.JFrame {
     
     Queries q;
     DefaultComboBoxModel model;
+    int[] ids_runners;
+    int[] ids_registration;
+    int[] ids_charities;
     
     /**
      * Creates new form Sponsor_a_Runner
      */
     public Sponsor_a_Runner() {
         initComponents();
-        Timer t  = new Timer(this, lbl_time);
+        
+        /* jDialog */
+        jd_charity.setSize(417, 390);
+        jd_charity.setLocationRelativeTo(this);
+        jd_charity.setTitle("Data Charity");
+        jd_charity.setResizable(false);
+        
+        /* jTextArea */
+        jta_description.setLineWrap(true);
+        
+        SpinnerNumberModel smcvc = new SpinnerNumberModel();
+        SpinnerNumberModel smed = new SpinnerNumberModel();
+        SpinnerNumberModel smey = new SpinnerNumberModel();
+        
+        /* Models Spiners */
+        smcvc.setValue(0);
+        smcvc.setMinimum(0);
+        smcvc.setMaximum(999);
+        smed.setMinimum(1);
+        smed.setValue(1);
+        smed.setMaximum(12);
+        smey.setMinimum(2016);
+        smey.setValue(2016);
+        smey.setMaximum(2020);
+        
+        spi_cvc.setModel(smcvc);
+        spi_expire_day.setModel(smed);
+        spi_expire_year.setModel(smey);
+        
+        Timer t  = new Timer(lbl_time);
+        
         q = new Queries();
         model = new DefaultComboBoxModel();
         
         ResultSet data = q.get_Runners();
+        int number_runners = q.get_Number_Runners();
         
-        System.out.println(data);
+        ids_runners = new int[number_runners];
+        ids_registration = new int[number_runners];
+        ids_charities = new int[number_runners];
+        
+        int num_users = 0;
         
         try {
             model.removeAllElements();
-            model.addElement("Select");
+            model.addElement("Select Runner");
             
             while(data.next()){
+                ids_runners[num_users] = data.getInt("RunnerId");
+                ids_registration[num_users] = data.getInt("RegistrationId");
+                ids_charities[num_users] = data.getInt("CharityId");
+                num_users++;
                 model.addElement(data.getString("LastName") + ", " + data.getString("FirstName") + " - " + data.getString("CountryCode"));
             }
             
             jcb_runner.setModel(model);
+            jcb_runner.setToolTipText("Number Runners: "+ num_users);
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -58,6 +97,11 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jd_charity = new javax.swing.JDialog();
+        lbl_nameCharity = new javax.swing.JLabel();
+        lbl_logoCharity = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jta_description = new javax.swing.JTextArea();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btn_back = new javax.swing.JButton();
@@ -69,18 +113,18 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        txt_name = new javax.swing.JTextField();
+        txt_nameSponsor = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jcb_runner = new javax.swing.JComboBox<>();
+        jcb_runner = new javax.swing.JComboBox<String>();
         jLabel8 = new javax.swing.JLabel();
         txt_name_card = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         txt_number_card = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        txt_expire_year = new javax.swing.JSpinner();
-        txt_expire_day = new javax.swing.JSpinner();
+        spi_expire_year = new javax.swing.JSpinner();
+        spi_expire_day = new javax.swing.JSpinner();
         jLabel11 = new javax.swing.JLabel();
-        txt_cvc = new javax.swing.JSpinner();
+        spi_cvc = new javax.swing.JSpinner();
         jPanel4 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -94,6 +138,41 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
         btn_reset = new javax.swing.JButton();
         txt_amount = new javax.swing.JTextField();
 
+        lbl_nameCharity.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbl_nameCharity.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_nameCharity.setText("Name Charity");
+
+        lbl_logoCharity.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        jta_description.setEditable(false);
+        jta_description.setColumns(20);
+        jta_description.setRows(5);
+        jScrollPane1.setViewportView(jta_description);
+
+        javax.swing.GroupLayout jd_charityLayout = new javax.swing.GroupLayout(jd_charity.getContentPane());
+        jd_charity.getContentPane().setLayout(jd_charityLayout);
+        jd_charityLayout.setHorizontalGroup(
+            jd_charityLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_charityLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jd_charityLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbl_logoCharity, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbl_nameCharity, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jd_charityLayout.setVerticalGroup(
+            jd_charityLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_charityLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(lbl_nameCharity)
+                .addGap(18, 18, 18)
+                .addComponent(lbl_logoCharity, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sponsor a Runner");
         setResizable(false);
@@ -102,7 +181,7 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("MARATHON SKILLS 2015");
+        jLabel1.setText("MARATHON SKILLS 2016");
 
         btn_back.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         btn_back.setText("Back");
@@ -180,7 +259,7 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
         jLabel7.setText("Runner");
 
         jcb_runner.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jcb_runner.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select", "Mathie (USA)" }));
+        jcb_runner.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Select", "Mathie (USA)" }));
 
         jLabel8.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel8.setText("Name Card");
@@ -191,7 +270,7 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel10.setText("Expire date");
 
-        txt_expire_year.setValue(2015);
+        spi_expire_year.setValue(2015);
 
         jLabel11.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel11.setText("CVC");
@@ -203,36 +282,39 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
-                        .addComponent(jLabel5)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel6))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_name)
-                            .addComponent(jcb_runner, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel9)
                             .addComponent(jLabel8)
                             .addComponent(jLabel10)
                             .addComponent(jLabel11))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(txt_cvc, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(txt_expire_day, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(25, 25, 25)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txt_number_card, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(txt_name_card)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(spi_cvc, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
+                                    .addComponent(spi_expire_day))
                                 .addGap(18, 18, 18)
-                                .addComponent(txt_expire_year))
-                            .addComponent(txt_name_card, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txt_number_card, javax.swing.GroupLayout.Alignment.TRAILING))))
+                                .addComponent(spi_expire_year, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel6))
+                        .addGap(25, 25, 25)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jcb_runner, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(txt_nameSponsor, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(29, 29, 29))
         );
         jPanel3Layout.setVerticalGroup(
@@ -243,7 +325,7 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(txt_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_nameSponsor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
@@ -259,12 +341,12 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(txt_expire_year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_expire_day, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(spi_expire_year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spi_expire_day, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(txt_cvc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(spi_cvc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -280,6 +362,11 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
         lbl_information_charity.setText("?");
         lbl_information_charity.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbl_information_charity.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lbl_information_charity.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl_information_charityMouseClicked(evt);
+            }
+        });
 
         jLabel15.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(153, 153, 153));
@@ -349,26 +436,23 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(lbl_information_charity, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(62, 62, 62)
-                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lbl_number_cash, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(45, 45, 45)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(btn_less)
-                                .addGap(93, 93, 93))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(58, 58, 58)
-                                .addComponent(txt_amount, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btn_more))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btn_pay_now)
-                        .addGap(28, 28, 28)
-                        .addComponent(btn_reset)))
+                                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lbl_number_cash, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btn_less)
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(jPanel4Layout.createSequentialGroup()
+                                    .addComponent(btn_pay_now)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btn_reset))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
+                                    .addGap(58, 58, 58)
+                                    .addComponent(txt_amount, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(btn_more))))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -405,21 +489,19 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(213, 213, 213)
-                        .addComponent(jLabel2)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(231, 231, 231))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -478,71 +560,99 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
                     lbl_number_cash.setText(""+(amount + Integer.parseInt(txt_amount.getText())));
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, "Write Only Numbers","Error",JOptionPane.ERROR_MESSAGE);
-                    txt_amount.setText("");
                 }
+                txt_amount.setText("");
             }
         }
     }//GEN-LAST:event_txt_amountKeyPressed
 
     private void btn_resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_resetActionPerformed
         // TODO add your handling code here:
-         this.setVisible(false);
+        this.setVisible(false);
         Home h = new Home();
         h.setVisible(true);
     }//GEN-LAST:event_btn_resetActionPerformed
 
     private void btn_pay_nowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pay_nowActionPerformed
         // TODO add your handling code here:
-        String name = txt_name.getText();
+        String name = txt_nameSponsor.getText();
         String runner = jcb_runner.getSelectedItem() .toString();
         String name_card = txt_name_card.getText();
         long number_card = 0;
         int expire_day = 0;
         int expire_year = 0;
         int cvc = 0;
+        int mount = Integer.parseInt(lbl_number_cash.getText());
         
         Calendar time = Calendar.getInstance();
-        String[] date = time.getTime().toString().split(" ");
-        int day = Integer.parseInt(date[2]);
-        int year = Integer.parseInt(date[5]);
+        int year = Integer.parseInt(time.getTime().toString().split(" ")[5]);
         
         try{
             number_card = Long.parseLong(txt_number_card.getText());
-            expire_day = Integer.parseInt(txt_expire_day.getValue().toString());
-            expire_year = Integer.parseInt(txt_expire_year.getValue().toString());
-            cvc = Integer.parseInt(txt_cvc.getValue().toString());
+            expire_day = Integer.parseInt(spi_expire_day.getValue().toString());
+            expire_year = Integer.parseInt(spi_expire_year.getValue().toString());
+            cvc = Integer.parseInt(spi_cvc.getValue().toString());
         }catch(Exception e){
             System.out.println(e);
         }
         
         if("".equals(name)){
-            JOptionPane.showMessageDialog(this, "The Name is empty","Warning",JOptionPane.WARNING_MESSAGE);
-            txt_name.requestFocus();
-        }else if("Select".equals(runner)){
-            JOptionPane.showMessageDialog(this, "Select one Runner","Warning",JOptionPane.WARNING_MESSAGE);
+            message(this, "The Name is empty" ,"Marathon Skills 2016", JOptionPane.WARNING_MESSAGE);
+            txt_nameSponsor.requestFocus();
+        }else if(jcb_runner.getSelectedIndex() == 0){
+            message(this, "Select one Runner","Marathon Skills 2016",JOptionPane.WARNING_MESSAGE);
             jcb_runner.requestFocus();
         }else if("".equals(name_card)){
-            JOptionPane.showMessageDialog(this, "The Name Card is empty","Warning",JOptionPane.WARNING_MESSAGE);
+            message(this, "The Name Card is empty","Marathon Skills 2016",JOptionPane.WARNING_MESSAGE);
             txt_name_card.requestFocus();
         }else if("".equals(txt_number_card.getText())){
-            JOptionPane.showMessageDialog(this, "The Number Card is empty","Warning",JOptionPane.WARNING_MESSAGE);
+            message(this, "The Number Card is empty","Marathon Skills 2016",JOptionPane.WARNING_MESSAGE);
             txt_number_card.requestFocus();
         }else if(txt_number_card.getText().length() != 16){
-            JOptionPane.showMessageDialog(this, "The Number Card must have 16 numbers","Warning",JOptionPane.WARNING_MESSAGE);
+            message(this, "The Number Card must have 16 numbers","Marathon Skills 2016",JOptionPane.WARNING_MESSAGE);
             txt_number_card.requestFocus();
-        } else if("0".equals(txt_expire_day.getValue().toString()) || expire_day <= day){
-            JOptionPane.showMessageDialog(this, "The day  must be major that this day","Warning",JOptionPane.WARNING_MESSAGE);
-            txt_expire_day.requestFocus();
-        }else if(expire_year <= year){
-            JOptionPane.showMessageDialog(this, "The year must be major that this year","Warning",JOptionPane.WARNING_MESSAGE);
-            txt_expire_year.requestFocus();
-        }else if(Integer.parseInt(txt_cvc.getValue().toString()) <= 2 || "0".equals(txt_cvc.getValue().toString())){
-            JOptionPane.showMessageDialog(this, "The Number Card must have 16 numbers","Warning",JOptionPane.WARNING_MESSAGE);
-            txt_cvc.requestFocus();
+        }else if(expire_year < year){
+            message(this, "The year must be major that this year","Marathon Skills 2016",JOptionPane.WARNING_MESSAGE);
+            spi_expire_year.requestFocus();
+        }else if("0".equals(spi_cvc.getValue().toString()) || Integer.parseInt(spi_cvc.getValue().toString()) < 100){
+            message(this, "The Number CVC isn't valid","Marathon Skills 2016",JOptionPane.WARNING_MESSAGE);
+            spi_cvc.requestFocus();
+        }else if(mount == 0){
+            message(this, "The amount to donate can't be 0","Marathon Skills 2016",JOptionPane.WARNING_MESSAGE);
+            txt_amount.requestFocus();
         }else{
-            System.out.println("Complete");
+            boolean response = q.set_Sponsorship(name.toUpperCase(), ids_registration[jcb_runner.getSelectedIndex() - 1], mount);
+            
+            if(response){
+                Sponsorship_Confirmation sc = new Sponsorship_Confirmation();
+                this.setVisible(false);
+                sc.lbl_number_cash.setText(""+mount);
+                sc.lbl_runnerName.setText(jcb_runner.getSelectedItem().toString());
+                sc.setVisible(true);
+            }else{
+                message(this, "Error conection database", "Marathon Skills 2016", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_btn_pay_nowActionPerformed
+
+    private void lbl_information_charityMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_information_charityMouseClicked
+        // TODO add your handling code here:
+        if(jcb_runner.getSelectedIndex() == 0){
+            message(this, "Select first one runner", "Marathon Skills 2016", JOptionPane.WARNING_MESSAGE);
+        }else{
+            int idCharity = ids_charities[jcb_runner.getSelectedIndex() - 1];
+            
+            String[] dataCharity;
+            dataCharity = q.get_Data_Charity(idCharity);
+            
+            lbl_nameCharity.setText(dataCharity[0]);
+            jta_description.setText(dataCharity[1]);
+            lbl_logoCharity.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/"+dataCharity[2])));
+            
+            // show the dialog
+            jd_charity.setVisible(true);
+        }
+    }//GEN-LAST:event_lbl_information_charityMouseClicked
 
     /**
      * @param args the command line arguments
@@ -604,16 +714,25 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JComboBox<String> jcb_runner;
+    private javax.swing.JDialog jd_charity;
+    private javax.swing.JTextArea jta_description;
     private javax.swing.JLabel lbl_information_charity;
+    private javax.swing.JLabel lbl_logoCharity;
+    private javax.swing.JLabel lbl_nameCharity;
     private javax.swing.JLabel lbl_number_cash;
     private javax.swing.JLabel lbl_time;
+    private javax.swing.JSpinner spi_cvc;
+    private javax.swing.JSpinner spi_expire_day;
+    private javax.swing.JSpinner spi_expire_year;
     private javax.swing.JTextField txt_amount;
-    private javax.swing.JSpinner txt_cvc;
-    private javax.swing.JSpinner txt_expire_day;
-    private javax.swing.JSpinner txt_expire_year;
-    private javax.swing.JTextField txt_name;
+    private javax.swing.JTextField txt_nameSponsor;
     private javax.swing.JTextField txt_name_card;
     private javax.swing.JTextField txt_number_card;
     // End of variables declaration//GEN-END:variables
+
+    private void message(JFrame form, String message, String title, int icon) {
+        JOptionPane.showMessageDialog(form, message, title, icon);
+    }
 }
