@@ -94,4 +94,38 @@ public class Queries extends Conection{
             return false;
         }
     }
+
+    public ResultSet get_Charities() {
+        try {
+            conect();
+            
+            query = conection.prepareStatement("SELECT * FROM charity");
+            data = query.executeQuery();
+            
+            return data;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public int number_Charities() {
+        int n = 0;
+        
+        try {
+            conect();
+            
+            query = conection.prepareStatement("SELECT COUNT(*) FROM charity");
+            data = query.executeQuery();
+            
+            while(data.next()){
+                n = data.getInt(1);
+            }
+            
+            return n;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return 0;
+        }
+    }
 }
