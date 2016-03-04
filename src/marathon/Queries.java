@@ -128,4 +128,27 @@ public class Queries extends Conection{
             return 0;
         }
     }
+    
+    public ResultSet sum_Amount_Sponsorship(){
+        try {
+            conect();
+            
+            query = conection.prepareStatement(""
+                    +   "SELECT u.FirstName, u.LastName, r.Gender, c.CountryName, SUM(s.Amount) as amount, re.registrationId,c.CountryCode \n" +
+                        "FROM user u, runner r, country c, sponsorship s, registration re \n" +
+                        "WHERE u.Email = r.Email \n" +
+                        "	AND r.CountryCode = c.CountryCode \n" +
+                        "	AND r.RunnerId = re.RunnerId \n" +
+                        "	AND re.RegistrationId = s.RegistrationId\n" +
+                        "GROUP BY u.FirstName\n" +
+                        "ORDER BY amount DESC");
+            
+            data = query.executeQuery();
+            return data;
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 }

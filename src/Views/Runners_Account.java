@@ -1,19 +1,53 @@
 package Views;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import marathon.Queries;
 import marathon.Timer;
 
 /**
- * @author Mauro
+ * @author Mao
  */
-public class Find_Out_More_Information extends javax.swing.JFrame {
-
-    public Find_Out_More_Information() {
+public class Runners_Account extends javax.swing.JFrame {
+    
+    DefaultTableModel modelTable;
+    Queries q;
+    
+    public Runners_Account() {
         initComponents();
-        
-        Timer t  = new Timer(lbl_time);
-        
+
+        setTitle("Marathon Skills 2016 - Runners Account");
         setResizable(false);
-        setTitle("Marathon Skills 2016");
+
+        Timer t  = new Timer(lbl_time);
+
+        q = new Queries();
+        modelTable = new DefaultTableModel();
+        
+        modelTable.addColumn("Full Name");
+        modelTable.addColumn("Gender");
+        modelTable.addColumn("Country");
+        modelTable.addColumn("Total");
+
+        ResultSet dataRunners = q.sum_Amount_Sponsorship();
+        
+        try {
+            while(dataRunners.next()){
+                Object[] runner = new Object[4];
+                runner[0] = dataRunners.getString("FirstName")+" "+dataRunners.getString("LastName");
+                runner[1] = dataRunners.getString("Gender");
+                runner[2] = dataRunners.getString("CountryName");
+                runner[3] = dataRunners.getString("amount");
+                modelTable.addRow(runner);
+            }
+            
+            jtb_runners.setModel(modelTable);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     /**
@@ -31,8 +65,8 @@ public class Find_Out_More_Information extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         lbl_time = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        btn_list_charities = new javax.swing.JButton();
-        btn_runners_account = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jtb_runners = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -58,9 +92,9 @@ public class Find_Out_More_Information extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btn_back)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel1)
-                .addContainerGap(223, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -83,39 +117,34 @@ public class Find_Out_More_Information extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lbl_time, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbl_time, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbl_time)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel2.setText("Find out more Information");
+        jLabel2.setText("Runners Account");
 
-        btn_list_charities.setBackground(new java.awt.Color(255, 255, 255));
-        btn_list_charities.setText("List of charities");
-        btn_list_charities.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btn_list_charities.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_list_charitiesActionPerformed(evt);
-            }
-        });
+        jtb_runners.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
 
-        btn_runners_account.setBackground(new java.awt.Color(255, 255, 255));
-        btn_runners_account.setText("Runners Account");
-        btn_runners_account.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btn_runners_account.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_runners_accountActionPerformed(evt);
             }
-        });
+        ));
+        jScrollPane1.setViewportView(jtb_runners);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -123,29 +152,24 @@ public class Find_Out_More_Information extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_runners_account, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(jLabel2)
-                            .addGap(182, 182, 182))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(btn_list_charities, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(152, 152, 152)))))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 709, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(280, 280, 280)
+                .addComponent(jLabel2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel2)
-                .addGap(56, 56, 56)
-                .addComponent(btn_list_charities, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(btn_runners_account, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -156,23 +180,9 @@ public class Find_Out_More_Information extends javax.swing.JFrame {
     private void btn_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_backActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        Home h = new Home();
+        Find_Out_More_Information h = new Find_Out_More_Information();
         h.setVisible(true);
     }//GEN-LAST:event_btn_backActionPerformed
-
-    private void btn_list_charitiesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_list_charitiesActionPerformed
-        // TODO add your handling code here:
-        this.setVisible(false);
-        List_Charities lc = new List_Charities();
-        lc.setVisible(true);
-    }//GEN-LAST:event_btn_list_charitiesActionPerformed
-
-    private void btn_runners_accountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_runners_accountActionPerformed
-        // TODO add your handling code here:
-        this.setVisible(false);
-        Runners_Account ra = new Runners_Account();
-        ra.setVisible(true);
-    }//GEN-LAST:event_btn_runners_accountActionPerformed
 
     /**
      * @param args the command line arguments
@@ -191,33 +201,32 @@ public class Find_Out_More_Information extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Find_Out_More_Information.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Runners_Account.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Find_Out_More_Information.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Runners_Account.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Find_Out_More_Information.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Runners_Account.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Find_Out_More_Information.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Runners_Account.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Find_Out_More_Information().setVisible(true);
+                new Runners_Account().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_back;
-    private javax.swing.JButton btn_list_charities;
-    private javax.swing.JButton btn_runners_account;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jtb_runners;
     private javax.swing.JLabel lbl_time;
     // End of variables declaration//GEN-END:variables
 }

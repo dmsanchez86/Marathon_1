@@ -20,11 +20,15 @@ public class Timer implements Runnable{
         hilo = new Thread(this);
         hilo.start();
     }
+    
+    public void test(){
+        System.out.println("test");
+    }
 
     @Override
     public void run() {
         Calendar future_time = Calendar.getInstance();
-        future_time.set(2016, Calendar.FEBRUARY, 29, 6, 0, 0);
+        future_time.set(2016, Calendar.MARCH, 29, 6, 0, 0);
         long future_time_in_miliseconds = future_time.getTimeInMillis();
         
         String txt_time = lbl_time.getText();
