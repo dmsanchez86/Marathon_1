@@ -1,6 +1,5 @@
 package Views;
 
-import java.awt.event.ItemEvent;
 import java.sql.ResultSet;
 import java.util.Calendar;
 import javax.swing.DefaultComboBoxModel;
@@ -8,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
 import marathon.Queries;
+import marathon.Runner;
 import marathon.Timer;
 
 /**
@@ -17,9 +17,7 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
     
     Queries q;
     DefaultComboBoxModel model;
-    int[] ids_runners;
-    int[] ids_registration;
-    int[] ids_charities;
+    Runner runner;
     
     /**
      * Creates new form Sponsor_a_Runner
@@ -63,10 +61,6 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
         ResultSet data = q.get_Runners();
         int number_runners = q.get_Number_Runners();
         
-        ids_runners = new int[number_runners];
-        ids_registration = new int[number_runners];
-        ids_charities = new int[number_runners];
-        
         int num_users = 0;
         
         try {
@@ -74,11 +68,7 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
             model.addElement("Select Runner");
             
             while(data.next()){
-                ids_runners[num_users] = data.getInt("RunnerId");
-                ids_registration[num_users] = data.getInt("RegistrationId");
-                ids_charities[num_users] = data.getInt("CharityId");
-                num_users++;
-                model.addElement(data.getString("LastName") + ", " + data.getString("FirstName") + " - " + data.getString("CountryCode"));
+                model.addElement(new Runner(data.getInt("RunnerId"), data.getString("FirstName"), data.getString("LastName"), data.getString("BibNumber"), data.getString("CountryCode"), data.getInt("CharityId"), data.getInt("RegistrationId")));
             }
             
             jcb_runner.setModel(model);
@@ -200,8 +190,8 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(btn_back)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -238,6 +228,7 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
         );
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Sponsor a Runner");
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -250,6 +241,7 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Sponsorship Details");
 
         jLabel6.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -308,14 +300,15 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
                             .addComponent(jLabel6))
                         .addGap(25, 25, 25)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(jcb_runner, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(txt_nameSponsor, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(29, 29, 29))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -352,6 +345,7 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
 
         jLabel12.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setText("Charity");
 
         jLabel13.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -421,39 +415,41 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel12)
-                .addGap(92, 92, 92))
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(62, 62, 62)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel15)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jLabel13)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lbl_information_charity, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lbl_number_cash, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btn_less)
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(jPanel4Layout.createSequentialGroup()
-                                    .addComponent(btn_pay_now)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btn_reset))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
-                                    .addGap(58, 58, 58)
-                                    .addComponent(txt_amount, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(btn_more))))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(62, 62, 62)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel15)
+                                    .addGroup(jPanel4Layout.createSequentialGroup()
+                                        .addComponent(jLabel13)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(lbl_information_charity, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(45, 45, 45)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel4Layout.createSequentialGroup()
+                                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(lbl_number_cash, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(btn_less)
+                                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addGroup(jPanel4Layout.createSequentialGroup()
+                                            .addComponent(btn_pay_now)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(btn_reset))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
+                                            .addGap(58, 58, 58)
+                                            .addComponent(txt_amount, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(btn_more))))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -488,20 +484,17 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(231, 231, 231))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -536,10 +529,11 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
         // TODO add your handling code here:
         int amount = Integer.parseInt(lbl_number_cash.getText());
         
-        if(amount == 0 || amount < 10)
+        if(amount == 0 || amount < 10){
             return;
-        else
+        }else{
             lbl_number_cash.setText(""+(amount - 10));
+        }
     }//GEN-LAST:event_btn_lessActionPerformed
 
     private void btn_moreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_moreActionPerformed
@@ -576,7 +570,6 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
     private void btn_pay_nowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pay_nowActionPerformed
         // TODO add your handling code here:
         String name = txt_nameSponsor.getText();
-        String runner = jcb_runner.getSelectedItem() .toString();
         String name_card = txt_name_card.getText();
         long number_card = 0;
         int expire_day = 0;
@@ -621,7 +614,8 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
             message(this, "The amount to donate can't be 0","Marathon Skills 2016",JOptionPane.WARNING_MESSAGE);
             txt_amount.requestFocus();
         }else{
-            boolean response = q.set_Sponsorship(name.toUpperCase(), ids_registration[jcb_runner.getSelectedIndex() - 1], mount);
+            runner = (Runner) jcb_runner.getSelectedItem();
+            boolean response = q.set_Sponsorship(name.toUpperCase(), runner.getRegistrationId(), mount);
             
             if(response){
                 Sponsorship_Confirmation sc = new Sponsorship_Confirmation();
@@ -640,10 +634,10 @@ public class Sponsor_a_Runner extends javax.swing.JFrame {
         if(jcb_runner.getSelectedIndex() == 0){
             message(this, "Select first one runner", "Marathon Skills 2016", JOptionPane.WARNING_MESSAGE);
         }else{
-            int idCharity = ids_charities[jcb_runner.getSelectedIndex() - 1];
+            runner = (Runner) jcb_runner.getSelectedItem();
             
             String[] dataCharity;
-            dataCharity = q.get_Data_Charity(idCharity);
+            dataCharity = q.get_Data_Charity(runner.getIdCharity());
             
             lbl_nameCharity.setText(dataCharity[0]);
             jta_description.setText(dataCharity[1]);

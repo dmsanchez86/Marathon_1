@@ -36,7 +36,7 @@ public class Queries extends Conection{
     public ResultSet get_Runners(){
         try {
             conect();
-            query = conection.prepareStatement("SELECT u.FirstName, u.LastName, r.CountryCode, r.RunnerId, re.RegistrationId, ch.CharityId\n" +
+            query = conection.prepareStatement("SELECT u.FirstName, u.LastName, r.CountryCode, r.RunnerId, re.RegistrationId, ch.CharityId, r_e.BibNumber\n" +
                                                 "FROM user u\n" +
                                                 "INNER JOIN runner r ON r.Email = u.Email\n" +
                                                 "INNER JOIN registration re ON re.RunnerId = r.RunnerId\n" +
