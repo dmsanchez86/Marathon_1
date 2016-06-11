@@ -42,9 +42,10 @@ public class Queries extends Conection{
                                                 "INNER JOIN registration re ON re.RunnerId = r.RunnerId\n" +
                                                 "INNER JOIN charity ch ON re.CharityId = ch.CharityId\n" +
                                                 "INNER JOIN registrationevent r_e ON r_e.RegistrationId = re.RegistrationId\n" +
+                                                "INNER JOIN registrationstatus rs ON rs.RegistrationStatusId = re.RegistrationStatusId\n" +
                                                 "INNER JOIN event e ON e.EventId = r_e.EventId \n" +
                                                 "INNER JOIN marathon m ON m.MarathonId = e.MarathonId\n" +
-                                                "WHERE m.MarathonId = 5 ORDER BY r.CountryCode");
+                                                "WHERE m.MarathonId = 5 AND rs.RegistrationStatusId = 1 ORDER BY u.FirstName");
             data = query.executeQuery();
             return data;
         } catch (Exception e) {
